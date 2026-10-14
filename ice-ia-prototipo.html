@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08080d">
+<title>ice.ia — Vídeo com seu personagem</title>
+<style>
+:root{color-scheme:dark;--bg:#08080d;--panel:#101019;--line:#252536;--purple:#8b5cf6;--lav:#b7a0ff;--text:#f7f5ff;--muted:#aaa8bc}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#17112a 0%,var(--bg) 48%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{position:sticky;top:0;background:#08080dee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;z-index:2}
+.logo{font-weight:850;font-size:30px;letter-spacing:-1.5px}.logo span{color:var(--purple)}.pill{border:1px solid #39304f;border-radius:99px;padding:8px 12px;color:var(--lav);font-size:13px}
+main{max-width:720px;margin:auto;padding:18px 14px 38px}.hero,.step,.notice{border:1px solid var(--line);background:linear-gradient(145deg,#11111d,#0b0b11);border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 12px 35px #0002}
+.tag{display:inline-block;border-radius:99px;background:#292044;color:#c9b7ff;padding:6px 10px;font-size:12px;font-weight:700;letter-spacing:.4px}
+h1{font-size:clamp(27px,7vw,42px);line-height:1.08;letter-spacing:-1.3px;margin:16px 0 12px}h1 span{color:var(--lav)}p{color:var(--muted);line-height:1.5;margin:8px 0}
+.step h2{font-size:18px;margin:0 0 7px}.step p{font-size:14px;margin:0 0 14px}
+label.file{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:14px;border:1px dashed #65518f;border-radius:14px;background:#171222;color:#d9ceff;font-weight:700;text-align:center;cursor:pointer}
+input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.preview{display:none;margin-top:12px;width:100%;max-height:300px;object-fit:contain;border-radius:12px;background:#050508}
+textarea,input[type=url]{width:100%;background:#08080e;color:var(--text);border:1px solid #333047;border-radius:13px;padding:13px;font:inherit;outline:none}
+textarea:focus,input[type=url]:focus{border-color:var(--purple)}textarea{min-height:90px;resize:vertical}
+button{width:100%;border:0;border-radius:14px;padding:16px;background:linear-gradient(100deg,#9a6bff,#7041e8);color:white;font-size:16px;font-weight:800;margin-top:12px;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}.small{font-size:12px;color:#8e8ba1}.status{display:none;border:1px solid #4b3b70;background:#171225;border-radius:14px;padding:13px;margin-top:12px;color:#d9ceff;line-height:1.45}
+footer{text-align:center;color:#77748a;font-size:12px;padding:12px 20px 28px}.steps{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:620px){main{padding-top:26px}.steps{grid-template-columns:1fr 1fr;gap:14px}.steps .step{margin:0}.hero{padding:28px}}
+</style>
+</head>
+<body>
+<header><div class="logo">❄ ice<span>.ia</span></div><div class="pill">PROTÓTIPO • GRÁTIS</div></header>
+<main>
+<section class="hero">
+ <div class="tag">IA · VÍDEO</div>
+ <h1>Seu personagem.<br><span>Seu vídeo.</span></h1>
+ <p>Selecione uma foto do personagem e um vídeo de referência. Esta versão testa os arquivos e a interface; a geração por IA ainda precisa de um motor conectado.</p>
+</section>
+<div class="steps">
+<section class="step">
+ <h2>1. Foto do personagem</h2><p>Escolha uma imagem nítida, de preferência mostrando bem o rosto.</p>
+ <label class="file" for="photo">＋ Selecionar foto</label><input id="photo" type="file" accept="image/*">
+ <img id="photoPreview" class="preview" alt="Prévia da foto escolhida">
+ <p id="photoName" class="small">Nenhuma foto selecionada.</p>
+</section>
+<section class="step">
+ <h2>2. Vídeo original</h2><p>Escolha um vídeo curto que você tenha direito de editar. No iPhone, selecione pela fototeca.</p>
+ <label class="file" for="video">＋ Selecionar vídeo</label><input id="video" type="file" accept="video/*">
+ <video id="videoPreview" class="preview" controls playsinline></video>
+ <p id="videoName" class="small">Nenhum vídeo selecionado.</p>
+</section>
+</div>
+<section class="step" style="margin-top:14px">
+ <h2>3. Descreva o resultado</h2>
+ <p>Exemplo: “Substitua a pessoa pelo personagem da foto, preserve os movimentos e o cenário e mantenha o áudio original.”</p>
+ <textarea id="prompt" maxlength="1200">Substitua a pessoa do vídeo pelo personagem da foto. Preserve o cenário, os movimentos da câmera e o áudio original, mantendo a aparência consistente e realista.</textarea>
+ <button id="generate" disabled>Testar arquivos selecionados</button>
+ <div id="status" class="status" role="status" aria-live="polite"></div>
+ <p class="small">Privacidade: nesta versão, os arquivos são pré-visualizados no seu navegador e não são enviados para um servidor.</p>
+</section>
+<section class="notice">
+ <strong>O que falta para gerar o vídeo?</strong>
+ <p>Conectar um serviço de IA que aceite foto + vídeo e tenha processamento gratuito disponível. O site sozinho não consegue fazer essa substituição, e este protótipo não consome créditos nem envia seus arquivos.</p>
+</section>
+</main>
+<footer>ice.ia · Protótipo inicial para celular</footer>
+<script>
+const photo=document.querySelector('#photo'), video=document.querySelector('#video');
+const pp=document.querySelector('#photoPreview'), vp=document.querySelector('#videoPreview');
+const pn=document.querySelector('#photoName'), vn=document.querySelector('#videoName');
+const btn=document.querySelector('#generate'), status=document.querySelector('#status');
+let photoURL='', videoURL='';
+function update(){btn.disabled=!(photo.files.length&&video.files.length)}
+photo.addEventListener('change',()=>{if(photoURL)URL.revokeObjectURL(photoURL);const f=photo.files[0];if(!f){pp.style.display='none';pn.textContent='Nenhuma foto selecionada.';update();return}photoURL=URL.createObjectURL(f);pp.src=photoURL;pp.style.display='block';pn.textContent=f.name+' · '+(f.size/1024/1024).toFixed(1)+' MB';update()});
+video.addEventListener('change',()=>{if(videoURL)URL.revokeObjectURL(videoURL);const f=video.files[0];if(!f){vp.style.display='none';vn.textContent='Nenhum vídeo selecionado.';update();return}videoURL=URL.createObjectURL(f);vp.src=videoURL;vp.style.display='block';vn.textContent=f.name+' · '+(f.size/1024/1024).toFixed(1)+' MB';update()});
+btn.addEventListener('click',()=>{status.style.display='block';status.textContent='Os dois arquivos foram selecionados e podem ser visualizados. Ainda não foi gerado nenhum vídeo: falta conectar um motor de IA compatível. Nenhum arquivo foi enviado.';});
+</script>
+</body>
+</html>
